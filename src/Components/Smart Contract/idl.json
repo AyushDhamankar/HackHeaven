@@ -1,0 +1,552 @@
+{
+    "version": "0.1.0",
+    "name": "hackheaven1",
+    "instructions": [
+      {
+        "name": "initialize",
+        "accounts": [
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "registerUser",
+        "accounts": [
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          }
+        ],
+        "args": [
+          {
+            "name": "username",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "mob",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "registerGovernmentUser",
+        "accounts": [
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          }
+        ],
+        "args": [
+          {
+            "name": "username",
+            "type": "string"
+          },
+          {
+            "name": "department",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "mob",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": "string"
+          },
+          {
+            "name": "governmentempid",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "createPost",
+        "accounts": [
+          {
+            "name": "clock",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "img",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": "string"
+          },
+          {
+            "name": "priority",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "owner",
+        "accounts": [
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          }
+        ],
+        "args": []
+      },
+      {
+        "name": "addStatus",
+        "accounts": [
+          {
+            "name": "clock",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "addStatusToGovernment",
+        "accounts": [
+          {
+            "name": "clock",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "workerid",
+            "type": "u64"
+          }
+        ]
+      },
+      {
+        "name": "solutionPost",
+        "accounts": [
+          {
+            "name": "clock",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "signer",
+            "isMut": true,
+            "isSigner": true
+          }
+        ],
+        "args": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "img",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "postFeedback",
+        "accounts": [
+          {
+            "name": "clock",
+            "isMut": false,
+            "isSigner": false
+          },
+          {
+            "name": "baseAccount",
+            "isMut": true,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "feedback",
+            "type": "u64"
+          }
+        ]
+      }
+    ],
+    "accounts": [
+      {
+        "name": "BaseAccount",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "userLen",
+              "type": "u64"
+            },
+            {
+              "name": "userList",
+              "type": {
+                "vec": {
+                  "defined": "User"
+                }
+              }
+            },
+            {
+              "name": "postLen",
+              "type": "u64"
+            },
+            {
+              "name": "postList",
+              "type": {
+                "vec": {
+                  "defined": "Post"
+                }
+              }
+            },
+            {
+              "name": "owner",
+              "type": "publicKey"
+            },
+            {
+              "name": "governmentWorkerLen",
+              "type": "u64"
+            },
+            {
+              "name": "governmentWorkerList",
+              "type": {
+                "vec": {
+                  "defined": "GovernmentWorker"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "types": [
+      {
+        "name": "GovernmentWorker",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "u64"
+            },
+            {
+              "name": "username",
+              "type": "string"
+            },
+            {
+              "name": "department",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "name": "mob",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "governmentempid",
+              "type": "string"
+            },
+            {
+              "name": "complaintPost",
+              "type": {
+                "vec": "u64"
+              }
+            },
+            {
+              "name": "userAddress",
+              "type": "publicKey"
+            }
+          ]
+        }
+      },
+      {
+        "name": "SolutionPost",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "img",
+              "type": {
+                "vec": "string"
+              }
+            },
+            {
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Status",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "status",
+              "type": "string"
+            },
+            {
+              "name": "timestamp",
+              "type": "i64"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Post",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "u64"
+            },
+            {
+              "name": "userId",
+              "type": "u64"
+            },
+            {
+              "name": "img",
+              "type": {
+                "vec": "string"
+              }
+            },
+            {
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "name": "solutionposts",
+              "type": {
+                "vec": {
+                  "defined": "SolutionPost"
+                }
+              }
+            },
+            {
+              "name": "status",
+              "type": {
+                "vec": {
+                  "defined": "Status"
+                }
+              }
+            },
+            {
+              "name": "feedback",
+              "type": "u64"
+            }
+          ]
+        }
+      },
+      {
+        "name": "User",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "u64"
+            },
+            {
+              "name": "username",
+              "type": "string"
+            },
+            {
+              "name": "password",
+              "type": "string"
+            },
+            {
+              "name": "email",
+              "type": "string"
+            },
+            {
+              "name": "mob",
+              "type": "string"
+            },
+            {
+              "name": "ownPost",
+              "type": {
+                "vec": "u64"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "UserAlreadyRegistered",
+        "msg": "User Already Registered"
+      },
+      {
+        "code": 6001,
+        "name": "UserNotFound",
+        "msg": "User not found"
+      },
+      {
+        "code": 6002,
+        "name": "YouAreNotTheOwner",
+        "msg": "You're not the owner"
+      },
+      {
+        "code": 6003,
+        "name": "PostNotFound",
+        "msg": "Post not found"
+      }
+    ],
+    "metadata": {
+      "address": "GsTW4PYskCkD2rAwwGxvv2j58JphxYjhUux3y9SvLHJL"
+    }
+  }
