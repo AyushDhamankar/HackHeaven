@@ -38,10 +38,10 @@ function Navbar() {
         </Link>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
           <Link to="/register" class="mr-5 hover:text-white">
-            Register FIR
+            Register User
           </Link>
-          <Link to="/check" class="mr-5 hover:text-white">
-            View Status
+          <Link to="/registerworker" class="mr-5 hover:text-white">
+            Register Worker
           </Link>
         </nav>
       </div>

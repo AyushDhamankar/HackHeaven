@@ -43,8 +43,10 @@ function LoginUser({ state }) {
   };
 
   useEffect(()=>{
+    console.log("Start getData");
     getData();
-  },[])
+    console.log("End getData");
+  },[state])
 
   const register_user = async (event) => {
     try {
@@ -59,7 +61,7 @@ function LoginUser({ state }) {
             if (ans) {
                 console.log("Yes");
                 window.localStorage.setItem("email", email);
-                navigate('/explore');
+                navigate('/post');
             } else {
                 console.log("No");
             }
@@ -106,7 +108,7 @@ function LoginUser({ state }) {
         >
           <div class="flex flex-col text-center w-full mb-12">
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">
-              REGISTER GRIEVANCE
+              LOGIN USER
             </h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
               Submit grievance by filling out all the fields below. Please fill

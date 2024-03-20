@@ -11,10 +11,10 @@ function Hero() {
         <br class="hidden lg:inline-block" />Platform
       </h1>
       <p class="mb-8 lg:text-2xl leading-relaxed">Embrace the future of secure and transparent complaint management with our blockchain-based system, guaranteeing the utmost integrity, authenticity, and immutability of your complaint records.</p>
-      <div class="flex md:flex-row flex-col justify-center items-center">
+      {/* <div class="flex md:flex-row flex-col justify-center items-center">
         <button class="inline-flex lg:mb-0 mb-8 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"><Link to="/register" class="hover:text-white">Register FIR Now</Link></button>
         <button class="lg:ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg"><Link to="/check" class="hover:text-white">View Status</Link></button>
-      </div>
+      </div> */}
     </div>
     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
       <img class="object-cover object-center rounded" alt="hero" src="https://res.cloudinary.com/darrqmepw/image/upload/v1687359876/20945597-PhotoRoom.png-PhotoRoom_vhqqdd.png" />

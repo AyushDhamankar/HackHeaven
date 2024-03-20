@@ -1,90 +1,95 @@
 import { useEffect, useState } from "react";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
-import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
+import * as anchor from "@project-serum/anchor";
+import { Buffer } from "buffer";
 import idl from "../Smart Contract/idl.json";
 import kp from "../Smart Contract/keypair.json";
-import bs58 from "bs58";
-import { Buffer } from "buffer";
+import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
+import { Program, AnchorProvider, web3, utils } from "@project-serum/anchor";
 import { Link, useNavigate } from "react-router-dom";
 
 // Destructuring web3 objects
-const { SystemProgram } = web3;
+const { SystemProgram, Keypair } = web3;
 
 // Set Buffer globally
 window.Buffer = Buffer;
 
-// Create a keypair for the account that will hold the GIF data.
+// Initialize program ID
+const programID = new PublicKey(idl.metadata.address);
+
+// Define network configuration
+const network = clusterApiUrl("devnet");
+
+// Options for establishing connection
+const opts = {
+  preflightCommitment: "processed",
+};
+
+// Generate a base account keypair
 const arr = Object.values(kp._keypair.secretKey);
 const secret = new Uint8Array(arr);
 const baseAccount = Keypair.fromSecretKey(secret);
 
-// Initialize program ID
-const programID = new PublicKey(idl.metadata.address);
-
-// Initialize endpoint
-const endpoint =
-  "https://solana-devnet.g.alchemy.com/v2/5_Mpt8xd4uhahETZ0i38gMBjrmS9WAwX";
-
 // Initialize connection to Solana blockchain
-const connection = new Connection(endpoint, {
-  commitment: "confirmed",
-});
+const connection = new Connection(network, opts.preflightCommitment);
 
-// Options for establishing connection
-const opts = {
-  preflightCommitment: "confirmed",
-};
-
-function NavbarwithoutWallet({ saveStateforUser }) {
-  const navigate = useNavigate();
-  // Function to create a keypair from a private key
-  const createKeypairFromPrivateKey = () => {
-    // Your private key
-    const privateKeyBytes = bs58.decode(
-      "3MFs4bdBtPdQNyn1RqcbUchLEGB8hp8vm9TjYFshxSsokoZ1YWP4QAGTMPiYoGP1qpcmvMX12NoBJaVeLDZJ56Yi"
-    );
-    // Create a Keypair from the private key
-    const keypair = Keypair.fromSecretKey(new Uint8Array(privateKeyBytes));
-    console.log(keypair);
-    return keypair;
-  };
+function NavbarusingWallet({ saveStateforWallet }) {
+  const [connect, setConnect] = useState("");
 
   // Function to get Anchor provider
   const getProvider = () => {
-    const keypair = createKeypairFromPrivateKey();
+    const connection = new Connection(network, opts.preflightCommitment);
     const provider = new AnchorProvider(
       connection,
-      keypair,
+      window.solana,
       opts.preflightCommitment
     );
-    console.log(provider);
     return provider;
+  };
+
+  // Function to check if a wallet is connected
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { solana } = window;
+      if (solana) {
+        if (solana.isPhantom) {
+          const response = await solana.connect({
+            onlyIfTrusted: true,
+          });
+          console.log(response.publicKey.toString());
+          setConnect(response.publicKey.toString());
+        }
+      } else {
+        alert("Solana object not found!, Get a Phantom Wallet");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const setsaveState = () => {
     const provider = getProvider();
+    console.log(provider);
     const program = new Program(idl, programID, provider);
-    const keypair = createKeypairFromPrivateKey();
-    saveStateforUser({
-      keypair: keypair,
+    saveStateforWallet({
+      provider: provider,
       program: program,
       baseAccount: baseAccount,
     });
-    console.log("saveStateforUser", keypair, program, baseAccount);
+    console.log("saveStateforUser", provider, program, baseAccount);
+  };
+
+  const handleLogout = () => {
+    saveStateforWallet({
+      provider: "",
+      program: "",
+      baseAccount: "",
+    });
   };
 
   useEffect(() => {
     setsaveState();
-    const email = window.localStorage.getItem("email");
-    setEmail(email);
+    checkIfWalletIsConnected();
   }, []);
-
-  const [emailcheck, setEmail] = useState("");
-
-  const handleLogout = () => {
-    setEmail("");
-    window.localStorage.removeItem("email");
-  };
 
   const styles = {
     minHeight: "10vh",
@@ -124,14 +129,25 @@ function NavbarwithoutWallet({ saveStateforUser }) {
           <span class="ml-1 text-xl">CryptoJustice</span>
         </Link>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <Link to="/register" class="mr-5 hover:text-white">
-            Register FIR
+          {connect == "CrnHnNGQv1ic7o34wXoaeCpsbQWa7Lytr4FQkUXfgzjL" ? 
+          <>
+          <Link to="/dashboard" class="mr-5 hover:text-white">
+            Dashboard
           </Link>
-          <Link to="/check" class="mr-5 hover:text-white">
-            View Status
+          <Link to="/admin" class="mr-5 hover:text-white">
+            Verify
           </Link>
+          </>
+          :
+          <>
+          <Link to="/worker" class="mr-5 hover:text-white">
+            Complaints
+          </Link>
+          </>
+          }
+          
         </nav>
-        {emailcheck != "" ? (
+        {connect != "" ? (
           <button
             class="inline-flex items-center bg-indigo-500 text-white border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
             onClick={handleLogout}
@@ -151,4 +167,4 @@ function NavbarwithoutWallet({ saveStateforUser }) {
   );
 }
 
-export default NavbarwithoutWallet;
+export default NavbarusingWallet;

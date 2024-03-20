@@ -124,14 +124,17 @@ function NavbarwithoutWallet({ saveStateforUser }) {
           <span class="ml-1 text-xl">CryptoJustice</span>
         </Link>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <Link to="/register" class="mr-5 hover:text-white">
-            Register FIR
+          <Link to="/create" class="mr-5 hover:text-white">
+            Create
           </Link>
-          <Link to="/check" class="mr-5 hover:text-white">
-            View Status
+          <Link to="/post" class="mr-5 hover:text-white">
+            My Post
+          </Link>
+          <Link to="/feedpost" class="mr-5 hover:text-white">
+            Feedback
           </Link>
         </nav>
-        {emailcheck != "" ? (
+        {emailcheck != "" && emailcheck != undefined ? (
           <button
             class="inline-flex items-center bg-indigo-500 text-white border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
             onClick={handleLogout}
